@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEO Location Search</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #101322;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      padding-top: 40px;
+    }
+
+    .box {
+      width: 92%;
+      max-width: 420px;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid #2d3655;
+      background: #151a2e;
+      color: #fff;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .countries {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 14px 0;
+    }
+
+    .country {
+      padding: 11px;
+      border: 0;
+      border-radius: 8px;
+      background: #1a2036;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .country.active {
+      background: #2563eb;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      margin-top: 8px;
+      border: 0;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .newtab {
+      background: #16c957;
+      color: #fff;
+    }
+
+    .sametab {
+      background: #242b44;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h2>🌍 SEO Location Search</h2>
+
+    <input id="keyword" type="text" placeholder="Nhập từ khóa..." />
+
+    <div class="countries">
+      <button class="country active" data-gl="vn" data-hl="vi">🇻🇳 VN</button>
+      <button class="country" data-gl="br" data-hl="pt-BR">🇧🇷 BR</button>
+      <button class="country" data-gl="id" data-hl="id">🇮🇩 ID</button>
+    </div>
+
+    <button class="btn newtab" onclick="openSearch(true)">🌍 Mở tab mới</button>
+    <button class="btn sametab" onclick="openSearch(false)">🔎 Mở trong tab này</button>
+  </div>
+
+  <script>
+    let selected = {
+      gl: "vn",
+      hl: "vi"
+    };
+
+    document.querySelectorAll(".country").forEach(btn => {
+      btn.addEventListener("click", function () {
+        document.querySelectorAll(".country").forEach(b => b.classList.remove("active"));
+        this.classList.add("active");
+
+        selected.gl = this.dataset.gl;
+        selected.hl = this.dataset.hl;
+      });
+    });
+
+    function openSearch(newTab) {
+      const keyword = document.getElementById("keyword").value.trim();
+
+      if (!keyword) {
+        alert("Vui lòng nhập từ khóa");
+        return;
+      }
+
+      const url =
+        "https://www.google.com/search?q=" +
+        encodeURIComponent(keyword) +
+        "&gl=" + selected.gl +
+        "&hl=" + selected.hl +
+        "&pws=0";
+
+      if (newTab) {
+        window.open(url, "_blank");
+      } else {
+        window.location.href = url;
+      }
+    }
+  </script>
+
+</body>
+</html>
